@@ -232,7 +232,7 @@ def guncomapanysJSON():
     return jsonify(guncompanys=[r.serialize for r in guncompanys])
 
 
-# Show all restaurants
+# Show all gun companies
 @app.route('/')
 @app.route('/guncompany/')
 def showGuns():
@@ -247,7 +247,7 @@ def showGuns():
                                guncompanys=guncompanys)
 
 
-# Create a new restaurant
+# Create a new gun company
 
 
 @app.route('/guncompany/new/', methods=['GET', 'POST'])
@@ -266,7 +266,7 @@ def newGun():
     else:
             return render_template('newGun.html')
 
-# Edit a restaurant
+# Edit a gun company
 
 
 @app.route('/guncompany/<int:guncompany_id>/edit/', methods=['GET', 'POST'])
@@ -290,7 +290,7 @@ def editGun(guncompany_id):
         return render_template('editGun.html', guncompany=editedGun)
 
 
-# Show a restaurant menu
+# Show gun models menu.
 
 
 @app.route('/guncompany/<int:guncompany_id>/')
@@ -311,7 +311,7 @@ def showMenu(guncompany_id):
                                guncompany=guncompany, creator=creator)
 
 
-# Create a new menu item
+# Create a new gun model.
 @app.route('/guncompany/<int:guncompany_id>/menu/new/',
            methods=['GET', 'POST'])
 def newGunModel(guncompany_id):
@@ -320,8 +320,8 @@ def newGunModel(guncompany_id):
         return redirect('/login')
     guncompany = session.query(Gun).filter_by(id=guncompany_id).one()
     if login_session['user_id'] != guncompany.user_id:
-		return "<script>function myFunction() {alert('You are not authorized to\
-        add menu items to this gun model. Please create your own gun\
+        return "<script>function myFunction() {alert('You are not authorized\
+        to add menu items to this gun model. Please create your own gun\
         model in order to add items.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         newItem = GunModel(name=request.form['name'],
@@ -339,7 +339,7 @@ def newGunModel(guncompany_id):
         return render_template('Newgunmodel.html', guncompany_id=guncompany_id)
 
 
-# Edit a menu item
+# Edit a gun model.
 
 
 @app.route('/guncompany/<int:guncompany_id>/menu/<int:menu_id>/edit',
@@ -374,7 +374,7 @@ def editGunModel(guncompany_id, menu_id):
                                    menu_id=menu_id, item=editedItem)
 
 
-# Delete a menu item
+# Delete a gun model.
 @app.route('/guncompany/<int:guncompany_id>/menu/<int:menu_id>/delete',
            methods=['GET', 'POST'])
 def deleteGunModel(guncompany_id, menu_id):
@@ -385,7 +385,7 @@ def deleteGunModel(guncompany_id, menu_id):
     itemToDelete = session.query(GunModel).filter_by(id=menu_id).first()
 
     if login_session['user_id'] != guncompany.user_id:
-		return "<script>function myFunction() {alert('You are not authorized\
+        return "<script>function myFunction() {alert('You are not authorized\
         to delete this gun model. Please create your own gun model in order\
         to delete items.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
