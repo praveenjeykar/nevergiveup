@@ -59,6 +59,7 @@ class GunModel(Base):
             'course': self.course,
         }
 
+
 engine = create_engine('sqlite:///gundatabase.db')
 
 
